@@ -1,0 +1,19 @@
+# Stackblitz environments
+.env
+
+# Dependencies
+node_modules
+
+# OS-dependent files to be ignored
+.DS_Store
+
+# IDE files
+.vscode
+
+# Generated build files
+*.js
+!/scripts/runner.js
+tsconfig.tsbuildinfo
+
+# Beekeeper data
+storage_root-node

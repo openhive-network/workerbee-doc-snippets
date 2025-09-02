@@ -1,0 +1,26 @@
+{
+  "name": "workerbee-doc-snippets",
+  "version": "1.0.0",
+  "type": "module",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "test": "sh ./scripts/build-and-test.sh",
+    "testall": "run-s test-*"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "node": "^20.11 || >= 21.2"
+  },
+  "packageManager": "pnpm@10.0.0+sha512.b8fef5494bd3fe4cbd4edabd0745df2ee5be3e4b0b8b08fa643aa3e4c6702ccc0f00d68fa8a8c9858a735a0032485a44990ed2810526c875e416f001b17df12b",
+  "dependencies": {
+    "@hiveio/beekeeper": "1.27.11",
+    "@hiveio/wax": "1.27.6-rc10",
+    "@hiveio/workerbee": "1.27.6-rc13"
+  },
+  "devDependencies": {
+    "@types/node": "20",
+    "npm-run-all2": "8.0.4",
+    "typescript": "5.7.3"
+  }
+}
