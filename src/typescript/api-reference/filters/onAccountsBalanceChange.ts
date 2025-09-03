@@ -26,8 +26,9 @@ bot.observe.onAccountsBalanceChange(true, "guest4test", "guest4test1").subscribe
    * Balance changes include transfers, rewards, power ups/downs, and savings operations.
    * There is no callback data for this observer - it simply notifies when the change in any of monitored accounts occurs.
    */
-  next() {
-    console.log("💰 Balance changed");
+  next(data) {
+    for (const account in data.accounts)
+      console.log("New Balance:", data.accounts[account]?.balance.HBD.total);
   },
   error: console.error
 });

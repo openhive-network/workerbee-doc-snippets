@@ -23,8 +23,10 @@ bot.observe.onAccountsMetadataChange("guest4test", "guest4test1").subscribe({
    * Account metadata changes include profile updates.
    * There is no callback data for this observer - it simply notifies when any of monitored accounts change the metadata.
    */
-  next() {
-    console.log("👤 Account metadata changed");
+  next(data) {
+    for (const account in data.accounts) {
+      console.log(`👤 Account metadata changed for: ${account}, ${data.accounts[account].jsonMetadata}`);
+    }
   },
   error: console.error
 });
