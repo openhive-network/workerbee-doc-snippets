@@ -12,11 +12,14 @@ importers:
         specifier: 1.27.11
         version: 1.27.11
       '@hiveio/wax':
-        specifier: 1.27.6-rc10
-        version: 1.27.6-rc10
+        specifier: 1.27.12-rc1
+        version: 1.27.12-rc1
+      '@hiveio/wax-api-balance-tracker':
+        specifier: ^1.27.12
+        version: 1.27.12
       '@hiveio/workerbee':
-        specifier: 1.27.6-rc13
-        version: 1.27.6-rc13
+        specifier: 1.27.12-rc1
+        version: 1.27.12-rc1
     devDependencies:
       '@types/node':
         specifier: '20'
@@ -34,12 +37,15 @@ packages:
     resolution: {integrity: sha512-e3L0TTI1LI8mHqTgyGGOWsI6hPabOwFh47x9+nm+9IATzCS50SbEGx61781PhDmJUq+JIetMYphdtfuiqcMtoA==}
     engines: {node: ^20.11 || >= 21.2}
 
-  '@hiveio/wax@1.27.6-rc10':
-    resolution: {integrity: sha512-ojimDDF9xZAhuN/qZknB5ND/q1vUZvDgxwYPQ7XCep9BqOCe++BKCJnH7mdPs2J1zPc+CbKIX4xDQbf96ORO5g==}
+  '@hiveio/wax-api-balance-tracker@1.27.12':
+    resolution: {integrity: sha512-dHX62Juikn/XfKrNqLSMburIzWgmbSyz/jfRqVjQ8rFvxpJKl5NYe0kCiwjgtWjwkENxhKzMvscg2niga/e0iQ==}
+
+  '@hiveio/wax@1.27.12-rc1':
+    resolution: {integrity: sha512-5gwRVtFssxS+RxZYWQWRfYdT/mdLHvWLH2OTBiQklMTm+FQhTCjF0BlZnoiG79Ryd3ofc3oBe3wTu0RpwNcyLA==}
     engines: {node: ^20.11 || >= 21.2}
 
-  '@hiveio/workerbee@1.27.6-rc13':
-    resolution: {integrity: sha512-ypRjKHSNPFKBHtwnkszzU0kZTrTFtKr2LSprY4LFWhjro1tHkOMGl/g4BF3sSPDWrGG6tjzk9GDT2NgPooTx8w==}
+  '@hiveio/workerbee@1.27.12-rc1':
+    resolution: {integrity: sha512-6zjOfeRR18IEDo9H1RRE1NufM/nTlfTJpUmO5YH7uFm2r4ifum75AB0Be+og1mcqf0FmeHWOEmUiiqQ7NT0Y2Q==}
     engines: {node: ^20.11 || >= 21.2}
 
   '@types/node@20.19.11':
@@ -67,9 +73,6 @@ packages:
   json-parse-even-better-errors@4.0.0:
     resolution: {integrity: sha512-lR4MXjGNgkJc7tkQ97kb2nuEMnNCyU//XYVH0MKTGcXEiSudQ5MKGKen3C5QubYy0vmq+JGitUg92uuywGEwIA==}
     engines: {node: ^18.17.0 || >=20.5.0}
-
-  long@5.3.2:
-    resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
 
   memorystream@0.3.1:
     resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
@@ -135,15 +138,15 @@ snapshots:
 
   '@hiveio/beekeeper@1.27.11': {}
 
-  '@hiveio/wax@1.27.6-rc10':
+  '@hiveio/wax-api-balance-tracker@1.27.12': {}
+
+  '@hiveio/wax@1.27.12-rc1':
     dependencies:
       events: 3.3.0
-      long: 5.3.2
 
-  '@hiveio/workerbee@1.27.6-rc13':
+  '@hiveio/workerbee@1.27.12-rc1':
     dependencies:
-      '@hiveio/wax': 1.27.6-rc10
-      long: 5.3.2
+      '@hiveio/wax': 1.27.12-rc1
 
   '@types/node@20.19.11':
     dependencies:
@@ -164,8 +167,6 @@ snapshots:
   isexe@3.1.1: {}
 
   json-parse-even-better-errors@4.0.0: {}
-
-  long@5.3.2: {}
 
   memorystream@0.3.1: {}
 

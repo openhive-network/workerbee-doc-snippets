@@ -37,7 +37,13 @@
     "test-api-reference-providers-provideFeedPriceData": "npm run test src/typescript/api-reference/providers/provideFeedPriceData.ts",
     "test-api-reference-providers-provideManabarData": "npm run test src/typescript/api-reference/providers/provideManabarData.ts",
     "test-api-reference-providers-provideRcAccounts": "npm run test src/typescript/api-reference/providers/provideRcAccounts.ts",
-    "test-api-reference-providers-provideWitnesses": "npm run test src/typescript/api-reference/providers/provideWitnesses.ts"
+    "test-api-reference-providers-provideWitnesses": "npm run test src/typescript/api-reference/providers/provideWitnesses.ts",
+    "test-api-reference-custom-filter": "npm run test src/typescript/api-reference/custom/filter.ts",
+    "test-api-reference-custom-provide": "npm run test src/typescript/api-reference/custom/provide.ts",
+    "test-api-reference-custom-filterPiped": "npm run test src/typescript/api-reference/custom/filterPiped.ts",
+    "test-patterns-simple-retry": "npm run test src/typescript/patterns/simpleRetry.ts",
+    "test-patterns-exponential-backoff-retry": "npm run test src/typescript/patterns/exponentialBackoffRetry.ts",
+    "test-patterns-conditional-retry": "npm run test src/typescript/patterns/conditionalRetry.ts"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {
@@ -46,8 +52,9 @@
   "packageManager": "pnpm@10.0.0+sha512.b8fef5494bd3fe4cbd4edabd0745df2ee5be3e4b0b8b08fa643aa3e4c6702ccc0f00d68fa8a8c9858a735a0032485a44990ed2810526c875e416f001b17df12b",
   "dependencies": {
     "@hiveio/beekeeper": "1.27.11",
-    "@hiveio/wax": "1.27.6-rc10",
-    "@hiveio/workerbee": "1.27.6-rc13"
+    "@hiveio/wax": "1.27.12-rc1",
+    "@hiveio/wax-api-balance-tracker": "^1.27.12",
+    "@hiveio/workerbee": "1.27.12-rc1"
   },
   "devDependencies": {
     "@types/node": "20",
