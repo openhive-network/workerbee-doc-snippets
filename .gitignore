@@ -17,3 +17,6 @@ tsconfig.tsbuildinfo
 
 # Beekeeper data
 storage_root-node
+
+# AIDEV suite output (.aidev/run-checks.sh)
+test-results/

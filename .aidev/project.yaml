@@ -1,0 +1,82 @@
+# Profile for hive/workerbee-doc-snippets, written by hand after `aidev project scaffold`'s
+# shape (#13561).
+#
+# Schema reference: docs/architecture/project-profile.md
+# Onboarding procedure: the `onboard-external-project` skill.
+# Guide: docs/operations/onboarding-an-external-project.md
+#
+# The generator writes a starting point, not a governed answer: every
+# binding below is the command a maintainer said this project runs, and it
+# is reviewed and edited like any other declaration.
+version: 2
+project: workerbee-doc-snippets
+
+gitlab:
+  host: "gitlab.syncad.com"
+  path: "hive/workerbee-doc-snippets"
+  id: 538
+
+# A single-branch topology: aidev/integration is what work integrates into;
+# main is what ships, reached from it by merge request.
+branches:
+  integration: "aidev/integration"
+  # main is fast-forward only: hand off by merge request as a linear one-commit-per-change copy.
+  handoff: "main"
+  handoff_history: "linear"
+
+# How this project's suites execute (#13892): one kind, stated once.
+# The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
+environment:
+  kind: "container"
+  image: "registry.gitlab.syncad.com/hive/workerbee-doc-snippets/aidev-tests@sha256:62ecb4ee26498413113aba9a91790540e9a54c63b0091be5e06351d706c41cbd"
+  inputs: ["package.json", "pnpm-lock.yaml"]
+
+issues:
+  intake_label: todo
+  taxonomy: ".aidev/labels.yaml"
+  decompose:
+    # `never` is where an external project starts: nothing marks work
+    # approved on this project's behalf until there is a track record.
+    auto_todo: never
+  # Reports about this project's work are filed against this project.
+  watcher_reports: self
+
+# Verification slots. Each binding is what this project genuinely runs for
+# that slot — never one selection repeated under seven names, which makes
+# seven gates report on the same evidence while claiming to check seven
+# different things. This repository holds documentation snippets and has no CI
+# and no tests: every slot installs (frozen, offline) and typechecks and builds
+# the snippets with tsc, so several slots necessarily repeat that evidence; see
+# .aidev/README.md.
+verification:
+  quick:
+    adapter: command
+    args: [".aidev/run-checks.sh", "quick", "typecheck", "build"]
+    artifacts: ["test-results/quick/"]
+  full:
+    adapter: command
+    args: [".aidev/run-checks.sh", "full", "typecheck", "build"]
+    artifacts: ["test-results/full/"]
+  baseline:
+    adapter: command
+    args: [".aidev/run-checks.sh", "baseline", "typecheck", "build"]
+    artifacts: ["test-results/baseline/"]
+  canary:
+    adapter: command
+    args: [".aidev/run-checks.sh", "canary", "typecheck", "build"]
+    artifacts: ["test-results/canary/"]
+  static:
+    adapter: command
+    args: [".aidev/run-checks.sh", "static", "typecheck"]
+    artifacts: ["test-results/static/"]
+  coverage:
+    adapter: command
+    args: [".aidev/run-checks.sh", "coverage", "typecheck", "build"]
+    artifacts: ["test-results/coverage/"]
+  system:
+    adapter: command
+    args: [".aidev/run-checks.sh", "system", "build"]
+    artifacts: ["test-results/system/"]
+
+# Capability grants for target-side code. Empty until this project needs one.
+capabilities: []
