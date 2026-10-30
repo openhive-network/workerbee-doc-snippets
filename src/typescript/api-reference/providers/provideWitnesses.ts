@@ -12,10 +12,12 @@
  * The callback receives data of type {@link IWitnessProviderData},
  * which is automatically deduced from the set of configured providers.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Monitoring witness data...");
 
@@ -25,8 +27,7 @@ bot.observe.onBlock().provideWitnesses("guest4test", "guest4test1").subscribe({
    * The callback receives comprehensive witness information including performance metrics for the specified witnesses.
    */
   next(data) {
-    for (const witness in data.witnesses) {
-      const witnessData = data.witnesses[witness];
+    for (const [witness, witnessData] of Object.entries(data.witnesses)) {
       if (witnessData)
         console.log(`Witness ${witness}:`, witnessData);
       }

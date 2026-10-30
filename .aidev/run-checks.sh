@@ -4,7 +4,7 @@
 #   .aidev/run-checks.sh <suite> <step>...
 #
 # This repository holds the code snippets hive/workerbee-doc includes; it has
-# no CI and no tests of its own (see .aidev/README.md). Every run first
+# no tests of its own (see .aidev/README.md). Every run first
 # installs node_modules offline and frozen (.aidev/pnpm-deps.sh), one junit
 # case `install`. Steps, each one junit case (its log the failure body):
 #

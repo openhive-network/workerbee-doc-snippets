@@ -28,8 +28,8 @@ branches:
 # The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
 environment:
   kind: "container"
-  image: "registry.gitlab.syncad.com/hive/workerbee-doc-snippets/aidev-tests@sha256:62ecb4ee26498413113aba9a91790540e9a54c63b0091be5e06351d706c41cbd"
-  inputs: ["package.json", "pnpm-lock.yaml"]
+  image: "registry.gitlab.syncad.com/hive/workerbee-doc-snippets/aidev-tests@sha256:87f58f11f7eb6a0deb2f91cde066be5e9d196e6ec02bbbd7c73a08808a20c991"
+  inputs: ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", ".npmrc"]
 
 issues:
   intake_label: todo
@@ -44,8 +44,8 @@ issues:
 # Verification slots. Each binding is what this project genuinely runs for
 # that slot — never one selection repeated under seven names, which makes
 # seven gates report on the same evidence while claiming to check seven
-# different things. This repository holds documentation snippets and has no CI
-# and no tests: every slot installs (frozen, offline) and typechecks and builds
+# different things. This repository holds documentation snippets and has no
+# tests: every slot installs (frozen, offline) and typechecks and builds
 # the snippets with tsc, so several slots necessarily repeat that evidence; see
 # .aidev/README.md.
 verification:

@@ -14,11 +14,12 @@
  * The callback receives data of type {@link IManabarProviderData},
  * which is automatically deduced from the set of configured providers.
  */
-import { EManabarType } from "@hiveio/wax";
+import { createHiveChain, EManabarType } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Monitoring manabar data...");
 
@@ -29,11 +30,11 @@ bot.observe.onBlock().provideManabarData(EManabarType.UPVOTE, "guest4test", "gue
    * Manabar data includes current mana, max mana, and percentage values.
    */
   next(data) {
-    for (const account in data.manabarData) {
-      const rcData = data.manabarData[account]?.[EManabarType.UPVOTE];
+    for (const [account, manabars] of Object.entries(data.manabarData)) {
+      const upvoteManabar = manabars?.[EManabarType.UPVOTE];
 
-      if (rcData)
-        console.log(`${account} upvote manabar: ${rcData.percent}% (${rcData.current_mana}/${rcData.max_mana})`);
+      if (upvoteManabar)
+        console.log(`${account} upvote manabar: ${upvoteManabar.percent}% (${upvoteManabar.currentMana}/${upvoteManabar.max})`);
     }
   },
   error: console.error

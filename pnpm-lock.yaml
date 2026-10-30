@@ -4,52 +4,70 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  hiveio-toolset:
+    '@hiveio/wax':
+      specifier: 1.28.8-stable.261028191145
+      version: 1.28.8-stable.261028191145
+    '@hiveio/workerbee':
+      specifier: 1.28.4-rc1-stable.261029021233
+      version: 1.28.4-rc1-stable.261029021233
+  typescript-toolset:
+    typescript:
+      specifier: 6.0.3
+      version: 6.0.3
+
+overrides:
+  '@hiveio/beekeeper': 1.28.9-rc0-stable.261028200530
+
 importers:
 
   .:
     dependencies:
       '@hiveio/beekeeper':
-        specifier: 1.27.11
-        version: 1.27.11
+        specifier: 1.28.9-rc0-stable.261028200530
+        version: 1.28.9-rc0-stable.261028200530
       '@hiveio/wax':
-        specifier: 1.27.12-rc1
-        version: 1.27.12-rc1
+        specifier: catalog:hiveio-toolset
+        version: 1.28.8-stable.261028191145
       '@hiveio/wax-api-balance-tracker':
-        specifier: ^1.27.12
-        version: 1.27.12
+        specifier: 1.28.8-stable.261026135833
+        version: 1.28.8-stable.261026135833
       '@hiveio/workerbee':
-        specifier: 1.27.12-rc1
-        version: 1.27.12-rc1
+        specifier: catalog:hiveio-toolset
+        version: 1.28.4-rc1-stable.261029021233(@hiveio/wax@1.28.8-stable.261028191145)
     devDependencies:
       '@types/node':
-        specifier: '20'
-        version: 20.19.11
+        specifier: '24'
+        version: 24.19.2
       npm-run-all2:
         specifier: 8.0.4
         version: 8.0.4
       typescript:
-        specifier: 5.7.3
-        version: 5.7.3
+        specifier: catalog:typescript-toolset
+        version: 6.0.3
 
 packages:
 
-  '@hiveio/beekeeper@1.27.11':
-    resolution: {integrity: sha512-e3L0TTI1LI8mHqTgyGGOWsI6hPabOwFh47x9+nm+9IATzCS50SbEGx61781PhDmJUq+JIetMYphdtfuiqcMtoA==}
-    engines: {node: ^20.11 || >= 21.2}
+  '@hiveio/beekeeper@1.28.9-rc0-stable.261028200530':
+    resolution: {integrity: sha1-nzTNga2OqN6212HzkKyHGZoMuAk=, tarball: https://gitlab.syncad.com/api/v4/projects/558/packages/npm/@hiveio/beekeeper/-/@hiveio/beekeeper-1.28.9-rc0-stable.261028200530.tgz}
+    engines: {node: '>=24'}
 
-  '@hiveio/wax-api-balance-tracker@1.27.12':
-    resolution: {integrity: sha512-dHX62Juikn/XfKrNqLSMburIzWgmbSyz/jfRqVjQ8rFvxpJKl5NYe0kCiwjgtWjwkENxhKzMvscg2niga/e0iQ==}
+  '@hiveio/wax-api-balance-tracker@1.28.8-stable.261026135833':
+    resolution: {integrity: sha1-wC0pLNOIb03cUxwk/fRrOEsEi/Y=, tarball: https://gitlab.syncad.com/api/v4/projects/330/packages/npm/@hiveio/wax-api-balance-tracker/-/@hiveio/wax-api-balance-tracker-1.28.8-stable.261026135833.tgz}
 
-  '@hiveio/wax@1.27.12-rc1':
-    resolution: {integrity: sha512-5gwRVtFssxS+RxZYWQWRfYdT/mdLHvWLH2OTBiQklMTm+FQhTCjF0BlZnoiG79Ryd3ofc3oBe3wTu0RpwNcyLA==}
-    engines: {node: ^20.11 || >= 21.2}
+  '@hiveio/wax@1.28.8-stable.261028191145':
+    resolution: {integrity: sha1-FT9OHciWwgkExNyutr7xtQRs9Oo=, tarball: https://gitlab.syncad.com/api/v4/projects/419/packages/npm/@hiveio/wax/-/@hiveio/wax-1.28.8-stable.261028191145.tgz}
+    engines: {node: '>=24'}
 
-  '@hiveio/workerbee@1.27.12-rc1':
-    resolution: {integrity: sha512-6zjOfeRR18IEDo9H1RRE1NufM/nTlfTJpUmO5YH7uFm2r4ifum75AB0Be+og1mcqf0FmeHWOEmUiiqQ7NT0Y2Q==}
-    engines: {node: ^20.11 || >= 21.2}
+  '@hiveio/workerbee@1.28.4-rc1-stable.261029021233':
+    resolution: {integrity: sha1-Kxc2hocAxA0FQ22IOXxdg6ELjUo=, tarball: https://gitlab.syncad.com/api/v4/projects/452/packages/npm/@hiveio/workerbee/-/@hiveio/workerbee-1.28.4-rc1-stable.261029021233.tgz}
+    engines: {node: '>=24'}
+    peerDependencies:
+      '@hiveio/wax': '>= 1.28.8-0 < 1.29.0'
 
-  '@types/node@20.19.11':
-    resolution: {integrity: sha512-uug3FEEGv0r+jrecvUUpbY8lLisvIjg6AAic6a2bSP5OEOLeJsDSnvhCDov7ipFFMXS3orMpzlmi0ZcuGkBbow==}
+  '@types/node@24.19.2':
+    resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
 
   ansi-styles@6.2.1:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
@@ -116,13 +134,13 @@ packages:
     resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
     engines: {node: '>= 0.4'}
 
-  typescript@5.7.3:
-    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@6.21.0:
-    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+  undici-types@7.24.6:
+    resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -136,21 +154,21 @@ packages:
 
 snapshots:
 
-  '@hiveio/beekeeper@1.27.11': {}
+  '@hiveio/beekeeper@1.28.9-rc0-stable.261028200530': {}
 
-  '@hiveio/wax-api-balance-tracker@1.27.12': {}
+  '@hiveio/wax-api-balance-tracker@1.28.8-stable.261026135833': {}
 
-  '@hiveio/wax@1.27.12-rc1':
+  '@hiveio/wax@1.28.8-stable.261028191145':
     dependencies:
       events: 3.3.0
 
-  '@hiveio/workerbee@1.27.12-rc1':
+  '@hiveio/workerbee@1.28.4-rc1-stable.261029021233(@hiveio/wax@1.28.8-stable.261028191145)':
     dependencies:
-      '@hiveio/wax': 1.27.12-rc1
+      '@hiveio/wax': 1.28.8-stable.261028191145
 
-  '@types/node@20.19.11':
+  '@types/node@24.19.2':
     dependencies:
-      undici-types: 6.21.0
+      undici-types: 7.24.6
 
   ansi-styles@6.2.1: {}
 
@@ -202,9 +220,9 @@ snapshots:
 
   shell-quote@1.8.3: {}
 
-  typescript@5.7.3: {}
+  typescript@6.0.3: {}
 
-  undici-types@6.21.0: {}
+  undici-types@7.24.6: {}
 
   which@2.0.2:
     dependencies:

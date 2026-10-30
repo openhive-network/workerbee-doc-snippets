@@ -14,10 +14,12 @@
  * which is automatically deduced from the set of configured filters.
  * Collected operations are grouped by account to allow easy association to the impacted account.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for account impacts...");
 
