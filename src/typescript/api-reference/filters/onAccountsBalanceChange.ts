@@ -13,10 +13,12 @@
  * Callback Data:
  * There is no callback data for this observer.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for balance changes...");
 
@@ -27,8 +29,8 @@ bot.observe.onAccountsBalanceChange(true, "guest4test", "guest4test1").subscribe
    * There is no callback data for this observer - it simply notifies when the change in any of monitored accounts occurs.
    */
   next(data) {
-    for (const account in data.accounts)
-      console.log("New Balance:", data.accounts[account]?.balance.HBD.total);
+    for (const accountData of Object.values(data.accounts))
+      console.log("New Balance:", accountData?.balance.HBD.total);
   },
   error: console.error
 });

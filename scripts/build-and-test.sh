@@ -7,7 +7,7 @@ echo $TEST_FILE
 
 rm ./*.js
 
-tsc --experimentalDecorators --outDir . --skipLibCheck -m node16 "$TEST_FILE"
+tsc --ignoreConfig --experimentalDecorators --outDir . --skipLibCheck -m node16 --types node "$TEST_FILE"
 
 cp scripts/runner.js runner.js
 

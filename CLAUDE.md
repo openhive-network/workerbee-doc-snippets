@@ -8,17 +8,18 @@ WorkerBee is a blockchain observation framework that provides filters (event tri
 
 ## Tech Stack
 
-- **Language:** TypeScript 5.7.3
-- **Runtime:** Node.js ^20.11 || >= 21.2
+- **Language:** TypeScript 6.0 (`catalog:typescript-toolset`)
+- **Runtime:** Node.js >= 24 (CI: ccc's `node-test-tools` image)
 - **Module System:** ES Modules (Node16 resolution)
-- **Package Manager:** pnpm@10.0.0
+- **Package Manager:** pnpm@10.33.0 (ccc's `PNPM_VERSION`)
 - **Target:** ES2022
 
-**Key Dependencies:**
+**Key Dependencies** (versions from ccc's pnpm catalogs: `pnpm-workspace.yaml` and `.npmrc`
+are symlinks into the `npm-common-config` submodule; run `git submodule update --init` first):
 - `@hiveio/workerbee` - Core observation framework
 - `@hiveio/wax` - Hive chain wrapper
 - `@hiveio/beekeeper` - Data access layer
-- `@hiveio/wax-api-balance-tracker` - Financial data provider
+- `@hiveio/wax-api-balance-tracker` - Financial data provider (not in a ccc catalog: pinned in `package.json` to a 1.28.8 build)
 
 ## Directory Structure
 
@@ -74,11 +75,12 @@ Every snippet file follows this structure:
  * @returnData Type - What data is returned
  */
 
-import { WorkerBee } from "@hiveio/workerbee";
-import { SomeClassifier } from "@hiveio/workerbee/classifiers";
+import { createHiveChain } from "@hiveio/wax";
+import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("Listening for events...");
 
@@ -109,8 +111,9 @@ bot.observe.onFilter([params])
 
 **Custom Filter with API:**
 ```typescript
-const chain = await createHiveChain().extend(BalanceTrackerApi);
-const bot = new WorkerBee({ explicitChain: chain });
+const extendedChain = (await createHiveChain()).extendRest(WaxExtendedData);
+const bot = new WorkerBee(extendedChain);
+// call the REST API through extendedChain.restApi (bot.chain carries no REST typing)
 ```
 
 ### Naming Conventions
@@ -121,7 +124,9 @@ const bot = new WorkerBee({ explicitChain: chain });
 
 ## CI/CD Notes
 
-No CI/CD configuration present in repository. This is a documentation snippets project - snippets are tested locally via npm scripts.
+`.gitlab-ci.yml` runs one `typecheck` job (ccc's `.npm_based_job_base`: frozen install, then
+`tsc --noEmit` over `src/`) on ccc's `node-test-tools` image, tagged `public-runner-docker`.
+Snippets are run locally via npm scripts (they need a live Hive API node).
 
 Build process (from `build-and-test.sh`):
 1. Remove old compiled `.js` files
