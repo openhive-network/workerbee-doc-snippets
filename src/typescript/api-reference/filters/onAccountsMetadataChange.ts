@@ -10,10 +10,12 @@
  *
  * There is no callback data for this observer.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for account metadata changes...");
 
@@ -24,8 +26,8 @@ bot.observe.onAccountsMetadataChange("guest4test", "guest4test1").subscribe({
    * There is no callback data for this observer - it simply notifies when any of monitored accounts change the metadata.
    */
   next(data) {
-    for (const account in data.accounts) {
-      console.log(`👤 Account metadata changed for: ${account}, ${data.accounts[account].jsonMetadata}`);
+    for (const [account, accountData] of Object.entries(data.accounts)) {
+      console.log(`👤 Account metadata changed for: ${account}, ${accountData?.jsonMetadata}`);
     }
   },
   error: console.error

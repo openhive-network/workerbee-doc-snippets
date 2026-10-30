@@ -17,7 +17,9 @@ Task and session branches never reach `aidev/integration` through merge requests
 lands them after its own verification. `aidev/integration` reaches `main` by this project's
 usual process, merge requests included — the platform never merges into any other branch.
 
-This repository has no CI pipeline of its own.
+CI (`.gitlab-ci.yml`) runs one `typecheck` job on ccc's `node-test-tools` image: the frozen
+install of ccc's npm templates (`.npm_based_job_base`) and `tsc --noEmit` over every snippet. It
+skips `ai/*` and `session/*` branches, and pushes to `aidev/integration`.
 
 ## Suites run before work lands
 
@@ -49,10 +51,16 @@ blocks from a Hive API node, and the suites run with no network.
 `.aidev/runtime/Dockerfile` builds on common-ci-configuration's `node-test-tools:develop` (Node
 and pnpm come from there; this repository pins no Node of its own in it) and adds a pnpm store
 filled from `pnpm-lock.yaml` by `pnpm fetch`. Rebuild and re-pin it with
-`.aidev/runtime/build.sh --push` when the Dockerfile or the files it copies change, or to follow a
-new `node-test-tools:develop`, and put the printed `repo@sha256:…` into `environment.image`.
+`.aidev/runtime/build.sh --push` when the Dockerfile or the files it copies change (ccc's catalogs
+too: `pnpm-workspace.yaml` links into the submodule), or to follow a new `node-test-tools:develop`, and put the printed `repo@sha256:…` into `environment.image`.
 
 ## Known state at onboarding (2026-10-29)
 
 - `install`, `typecheck` and `build` pass offline (all 35 snippets compile with TypeScript
   5.7.3 against wax / workerbee 1.27.12-rc1).
+- Since issue #1 the dependencies come from common-ci-configuration's pnpm catalogs
+  (`catalog:hiveio-toolset`, `catalog:typescript-toolset`): `pnpm-workspace.yaml` and `.npmrc`
+  are symlinks into the `npm-common-config` submodule (ccc `develop`), which a checkout must
+  initialise before a run (`.aidev/pnpm-deps.sh` refuses otherwise).
+  `@hiveio/wax-api-balance-tracker`, which no ccc catalog has, is pinned in `package.json`.
+  The snippets follow the wax 1.28.8 / workerbee 1.28.4 API and compile with TypeScript 6.0.3.

@@ -14,11 +14,12 @@
  * The callback receives data of type {@link IManabarProviderData},
  * which is automatically deduced from the set of configured filters.
  */
-import { EManabarType } from "@hiveio/wax";
+import { createHiveChain, EManabarType } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for accounts with full RC manabar...");
 

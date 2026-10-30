@@ -4,12 +4,13 @@
 #
 # Node and pnpm come from common-ci-configuration's node-test-tools image, the one
 # hive's CI templates use; this file pins no Node version of its own. It adds a
-# pnpm store filled from pnpm-lock.yaml (`pnpm fetch`), so
+# pnpm store filled from pnpm-lock.yaml (`pnpm fetch`, resolved against ccc's
+# catalogs in pnpm-workspace.yaml, with @hiveio from ccc's .npmrc registry), so
 # `pnpm install --offline --frozen-lockfile` links node_modules in the sandbox.
 #
 # .aidev/runtime/build.sh builds it on the digest node-test-tools:develop names at
 # the time; the result is pinned as `environment.image`. Rebuild it whenever
-# pnpm-lock.yaml changes.
+# pnpm-lock.yaml or ccc's catalogs change.
 ARG BASE_IMAGE=registry.gitlab.syncad.com/hive/common-ci-configuration/node-test-tools:develop
 FROM ${BASE_IMAGE}
 USER root
@@ -27,7 +28,7 @@ ENV HOME=/tmp \
 RUN mkdir -p /opt/xdg-config/pnpm \
     && printf 'manage-package-manager-versions=false\n' > /opt/xdg-config/pnpm/rc \
     && chmod -R a+rX /opt/xdg-config
-COPY package.json pnpm-lock.yaml /tmp/pnpm-fetch/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc /tmp/pnpm-fetch/
 RUN cd /tmp/pnpm-fetch \
     && pnpm fetch \
     && cd / && rm -rf /tmp/pnpm-fetch /tmp/.npm /tmp/.cache /tmp/.local \

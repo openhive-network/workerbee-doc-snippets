@@ -12,10 +12,12 @@
  * The callback receives data of type {@link ITransactionProviderData},
  * which is automatically deduced from the set of configured filters.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 // You can access chain only after calling start method.
 const tx = await bot.chain!.createTransaction();

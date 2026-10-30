@@ -19,7 +19,7 @@ cd "$(dirname "$0")/../.."
 REPOSITORY="${AIDEV_RUNTIME_REPOSITORY:-registry.gitlab.syncad.com/hive/workerbee-doc-snippets/aidev-tests}"
 BASE_IMAGE="$(sed -n 's/^ARG BASE_IMAGE=//p' .aidev/runtime/Dockerfile)"
 # The files the Dockerfile copies (its build context holds only these).
-CONTEXT_FILES=(package.json pnpm-lock.yaml)
+CONTEXT_FILES=(package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc)
 INPUTS=(.aidev/runtime/Dockerfile "${CONTEXT_FILES[@]}")
 input_hash() {
     local base_digest
@@ -50,6 +50,7 @@ echo "$REPOSITORY:$TAG is not in the registry; building it" >&2
 context="$(mktemp -d)"
 trap 'rm -rf "$context"' EXIT
 # Only the files the Dockerfile copies: the repository root holds node_modules.
+# pnpm-workspace.yaml and .npmrc are symlinks into the submodule: -L copies them.
 cp -L "${CONTEXT_FILES[@]}" "$context/"
 build=(docker buildx build --pull --provenance=false -f .aidev/runtime/Dockerfile -t "$REPOSITORY:$TAG")
 [ -z "${AIDEV_RUNTIME_BUILDER:-}" ] || build+=(--builder "$AIDEV_RUNTIME_BUILDER")

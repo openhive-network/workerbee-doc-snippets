@@ -31,8 +31,8 @@ const chain = await createHiveChain();
 const extendedChain = chain.extendRest(WaxExtendedData);
 
 // Create WorkerBee with the extended chain
-const bot = new WorkerBee({ explicitChain: extendedChain });
-await bot.start();
+const bot = new WorkerBee(extendedChain);
+bot.start();
 
 bot.observe
   .provideBlockHeaderData()
@@ -40,11 +40,11 @@ bot.observe
     // Provider function - fetches top HIVE holders and enriches data
     async () => {
       // Get top token holders from balance tracker API
-      const topHoldersResponse = await bot.chain.restApi.balanceApi.topHolders({
+      const topHoldersResponse = await extendedChain.restApi.balance_tracker.topHolders({
         "coin-type": BtrackerBackendNaiType.HIVE
       });
 
-      return { topHolders: topHoldersResponse.map(holder => holder.account) };
+      return { topHolders: (topHoldersResponse.holders_result ?? []).map(holder => holder.account) };
     },
     // Filter function - uses piped data to determine if conditions are met
     async (pipedData, data) => {

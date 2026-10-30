@@ -14,10 +14,12 @@
  * The callback receives data of type {@link IPostMetadataProviderData},
  * which is automatically deduced from the set of configured filters.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for posts near payout...");
 
@@ -27,9 +29,9 @@ bot.observe.onPostsIncomingPayout("-1h", "guest4test", "guest4test1").subscribe(
    * The callback receives data of type {@link IPostMetadataProviderData}, similar to the structure used in other post-related events.
    */
   next(data) {
-    for(const account in data.postsMetadata)
-      if(data.postsMetadata[account] !== undefined)
-        for(const permlink in data.postsMetadata[account])
+    for(const [account, posts] of Object.entries(data.postsMetadata))
+      if(posts !== undefined)
+        for(const permlink in posts)
           console.log(`⏰ Post about to payout: @${account}/${permlink}`);
   },
   error: console.error

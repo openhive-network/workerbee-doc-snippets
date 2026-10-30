@@ -13,10 +13,12 @@
  * The callback receives data of type {@link IRcAccountProviderData},
  * which is automatically deduced from the set of configured providers.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Monitoring RC account data...");
 
@@ -27,9 +29,7 @@ bot.observe.onBlock().provideRcAccounts("guest4test", "guest4test1").subscribe({
    * RC data includes current balance, maximum capacity, and last update time.
    */
   next(data) {
-    for (const account in data.rcAccounts) {
-      const rcData = data.rcAccounts[account];
-
+    for (const [account, rcData] of Object.entries(data.rcAccounts)) {
       if (rcData)
         console.log(`${account} RC details:`, rcData);
     }

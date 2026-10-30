@@ -26,8 +26,8 @@ const chain = await createHiveChain();
 const extendedChain = chain.extendRest(WaxExtendedData);
 
 // Create WorkerBee with the extended chain
-const bot = new WorkerBee({ explicitChain: extendedChain });
-await bot.start();
+const bot = new WorkerBee(extendedChain);
+bot.start();
 
 class TopHoldersClassifier extends CollectorClassifierBase<{ topHolders: string[] }> {}
 
@@ -37,13 +37,15 @@ bot.observe.provideBlockHeaderData().filter({
       const { currentWitness } = await data.get(DynamicGlobalPropertiesClassifier);
 
       // Get top token holders from balance tracker API
-      const topHoldersResponse = await bot.chain.restApi.balanceApi.topHolders({
+      const topHoldersResponse = await extendedChain.restApi.balance_tracker.topHolders({
         "coin-type": BtrackerBackendNaiType.HIVE
       });
 
       const store = data.accessStore(TopHoldersClassifier);
 
-      store.topHolders = topHoldersResponse.map(holder => holder.account);
+      store.topHolders = (topHoldersResponse.holders_result ?? [])
+        .map(holder => holder.account)
+        .filter(account => account !== undefined);
 
       return store.topHolders.includes(currentWitness);
     }

@@ -10,10 +10,12 @@
  *
  * There is no callback data for this observer.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 // Wait for a future block (adjust this number as needed)
 const targetBlock = 99999999;

@@ -13,10 +13,12 @@
  * The callback receives data of type {@link IBlockHeaderProviderData},
  * which is automatically deduced from the set of configured providers.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Monitoring block headers...");
 

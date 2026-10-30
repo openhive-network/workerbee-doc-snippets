@@ -14,10 +14,12 @@
  * The callback receives data of type {@link ICommentMetadataProviderData},
  * which is automatically deduced from the set of configured filters.
  */
+import { createHiveChain } from "@hiveio/wax";
 import WorkerBee from "@hiveio/workerbee";
 
-const bot = new WorkerBee();
-await bot.start();
+const chain = await createHiveChain();
+const bot = new WorkerBee(chain);
+bot.start();
 
 console.log("⏳ Watching for comments near payout...");
 
@@ -27,9 +29,9 @@ bot.observe.onCommentsIncomingPayout("-30m", "guest4test", "guest4test1").subscr
    * The callback receives data of type {@link ICommentMetadataProviderData}, similar to the structure used in other comment-related events.
    */
   next(data) {
-    for(const account in data.commentsMetadata)
-      if(data.commentsMetadata[account] !== undefined)
-        for(const permlink in data.commentsMetadata[account])
+    for(const [account, comments] of Object.entries(data.commentsMetadata))
+      if(comments !== undefined)
+        for(const permlink in comments)
           console.log(`⏰ Comment about to payout: @${account}/${permlink}`);
   },
   error: console.error
